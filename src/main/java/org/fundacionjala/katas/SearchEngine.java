@@ -1,5 +1,8 @@
 package org.fundacionjala.katas;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by danielgonzales on 7/25/2016.
  */
@@ -7,23 +10,37 @@ public class SearchEngine {
 
 
     private static final int INT_ZERO = 0;
-    private static final int INT_ONE = 1;
+    private static final String STRING_SPACE = " ";
+    private static final String STRING_WILDCARD = "_";
+    private static final String STRING_DOT = ".";
 
-    public static int find (String needle, String haystack) {
+    public static int find(String needle, String haystack) {
+        Pattern p = Pattern.compile(STRING_WILDCARD);
+        Matcher m = p.matcher(needle);
 
-        retval = str2.contains("_");
+        if (m.find()) {
+            int pos = INT_ZERO;
+            String[] inParts = haystack.split(STRING_SPACE);
+            for (String mySearch : inParts) {
+                if (mySearch.matches(needle.replace(STRING_WILDCARD, STRING_DOT)))
+                    pos = haystack.indexOf(mySearch);
+            }
+            return pos;
+        } else {
+            return haystack.indexOf(needle);
+        }
 
+//        CLEAN CODE ?
 
-        if( haystack.contains( "_" ) ) {
-            System.out.println ("contiene _");
-            return 5;
-//            for(int i = INT_ZERO; i < haystack.length (); i++ ){
+//        int pos = INT_ZERO;
+//        String[] inParts = haystack.split(STRING_SPACE);
 //
-//            }
-        }
-        else{
-            return haystack.indexOf (needle);
-        }
-
+//        for (String mySearch : inParts) {
+//            if (mySearch.matches(needle.replace(STRING_WILDCARD, STRING_DOT))) pos= haystack.indexOf(mySearch); }
+//
+//        return (m.find()) ? pos : haystack.indexOf(needle);
+//
+//        }
+//    }
     }
-    }
+}
